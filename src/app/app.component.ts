@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ShopRecipe';
+  featureSelect: string;
+
+  jumpTo(event): void {
+    console.log( event.pageLink);
+    this.featureSelect = event.pageLink;
+  }
 }

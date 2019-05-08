@@ -7,7 +7,7 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>();
 
-  private recipes: Recipe[] = [
+  public recipes: Recipe[] = [
     new Recipe('A test Recipe',
       'This is simply a test',
       'https://www.maxpixel.net/static/photo/1x/Food-Dishes-Eat-Gastronomy-Lunch-Recipe-2760200.jpg',
@@ -28,7 +28,12 @@ export class RecipeService {
   }
 
   getRecipes() {
-    return this.recipes.splice(0);
+    return this.recipes.slice(0);
+  }
+
+  getRecipe(index: number) {
+    console.log(this.recipes + 'in get Recipe');
+    return this.recipes[index];
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {

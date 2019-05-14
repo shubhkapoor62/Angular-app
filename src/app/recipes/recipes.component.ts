@@ -14,12 +14,6 @@ export class RecipesComponent implements OnInit {
   constructor(private recipeService: RecipeService, private router: Router) { }
 
   ngOnInit() {
-    this.recipeService.recipeSelected.subscribe((data: Recipe) => {
-      console.log(data + 'Recipe Item ');
-      this.selectedRecipe = data;
-      // this.router.navigate(['/recipes', 0]);
-    }, (error) => {
-      console.log('error');
-    });
+
   }
 }

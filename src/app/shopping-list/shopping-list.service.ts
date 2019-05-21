@@ -9,9 +9,13 @@ export class ShoppingListService {
     ];
 
     public ingredientsChangedEvent = new Subject<Ingredient[]>();
+    public startedEditingEvent = new Subject<number>();
 
     getIngredients() {
         return this.ingredients.slice();
+    }
+    getIngredient(index?) {
+        return this.ingredients[index];
     }
 
     addIngredients(data: Ingredient) {
@@ -24,4 +28,13 @@ export class ShoppingListService {
         this.ingredientsChangedEvent.next(this.ingredients.slice());
     }
 
+    updateIngrdients(index: number, newIngredient: Ingredient) {
+        this.ingredients[index] = newIngredient;
+        this.ingredientsChangedEvent.next(this.ingredients.slice());
+      }
+
+    deleteIngredients(index: number) {
+        this.ingredients.splice(index, 1);
+        this.ingredientsChangedEvent.next(this.ingredients.slice());
+    }
 }

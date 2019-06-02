@@ -1,4 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RecipeService } from './../../recipes/recipe.service';
+import { DataSharingService } from './../../shared/data-sharing.service';
+import { Response } from '@angular/http';
+import { Recipe } from 'src/app/recipes/recipe.model';
+import { AuthService } from './../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -6,11 +11,28 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor() { }
+  constructor(private dataSharingService: DataSharingService,
+    private recipeService: RecipeService,
+    private authService: AuthService) { }
 
   ngOnInit() {
   }
 
+  onSaveDataClick() {
+    this.dataSharingService.SaveData(this.recipeService.getRecipes())
+    .subscribe( (response) => {
+      console.log('Response' + response);
+    });
+  }
+
+  onFetchData() {
+    this.dataSharingService.fetchData()
+    .subscribe( (response: Response) => {
+      console.log(response);
+      const recipe: Recipe[] = response.json();
+      this.recipeService.setRecipe(recipe);
+    });
+  }
 
 }
 

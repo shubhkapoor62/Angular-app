@@ -48,7 +48,7 @@ export class RecipeService {
   }
 
   updateRecipe(index: number, newRecipe: Recipe) {
-    this.recipes[index]  = newRecipe;
+    this.recipes[index] = newRecipe;
     this.recipeChanged.next(this.recipes.slice());
   }
 
@@ -56,7 +56,12 @@ export class RecipeService {
     this.recipes.splice(index, 1);
     this.recipeChanged.next(this.recipes.slice());
   }
+
+  setRecipe(recipe: Recipe[]) {
+    this.recipes = recipe;
+    this.recipeChanged.next(this.recipes);
+  }
+
 }
 
 
-  

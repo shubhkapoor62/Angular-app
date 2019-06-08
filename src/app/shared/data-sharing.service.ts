@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { map } from 'rxjs/operators';
-import { Recipe } from '../recipes/recipe.model';
 import { AuthService } from './../auth/auth.service';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
+import { Recipe } from '../recipes/recipe.model';
 
 
 @Injectable({
@@ -10,25 +9,38 @@ import { AuthService } from './../auth/auth.service';
 })
 export class DataSharingService {
 
-  constructor(private http: Http,
+  constructor(private httpClient: HttpClient,
     private authService: AuthService) { }
 
   SaveData(data) {
     const token = this.authService.getToken();
-    return this.http.put('https://ng-recipe-book-ebfb6.firebaseio.com/recipes.json?auth=' + token, data);
+    // return this.httpClient.put('https://ng-recipe-book-ebfb6.firebaseio.com/recipes.json', data,
+    // {
+    //   observe: 'body',
+    //   params: new HttpParams().set('auth', token)
+    // });
+    const req = new HttpRequest('PUT', 'https://ng-recipe-book-ebfb6.firebaseio.com/recipes.json', data,
+    {reportProgress: true});
+
+    return this.httpClient.request(req);
   }
 
   fetchData() {
     const token = this.authService.getToken();
-    return this.http.get('https://ng-recipe-book-ebfb6.firebaseio.com/recipes.json?auth=' + token);
-      // .map(
-      //   (response: Response) => {
-      //     const recipe: Recipe[] = response.json();
-      //     if (!recipe['ingredient']) {
-      //       recipe['ingredient'] = [];
-      //     }
-      //     return recipe;
-      //   });
+    return this.httpClient.get<Recipe[]>('https://ng-recipe-book-ebfb6.firebaseio.com/recipes.json',
+      {
+        observe: 'body',
+        responseType: 'json'
+      }
+    );
+    // .map(
+    //   (response: Response) => {
+    //     const recipe: Recipe[] = response.json();
+    //     if (!recipe['ingredient']) {
+    //       recipe['ingredient'] = [];
+    //     }
+    //     return recipe;
+    //   });
   }
 
 }

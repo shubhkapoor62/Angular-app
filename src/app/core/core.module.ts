@@ -6,7 +6,6 @@ import { SharedModule } from '../shared/shared/shared.module';
 import { CommonModule } from '@angular/common';
 
 import { RecipeService } from '../recipes/recipe.service';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { DataSharingService } from '../shared/data-sharing.service';
 import { AuthService } from '../auth/auth.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,7 +28,6 @@ import { AuthInterceptor } from '../shared/auth.interceptor';
         CommonModule
     ],
     providers: [
-        ShoppingListService,
         RecipeService,
         DataSharingService,
         AuthService,
